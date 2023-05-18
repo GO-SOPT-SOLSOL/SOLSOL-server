@@ -26,6 +26,7 @@ public enum SuccessStatus {
 
     GET_AD_SUCCESS(HttpStatus.OK, "광고 조회에 성공했습니다."),
 
+
     /*
     Accounts
      */
