@@ -1,6 +1,7 @@
 package com.sopt.solsol.controller;
 
 import com.sopt.solsol.common.dto.ApiResponseDto;
+import com.sopt.solsol.dto.transfer.TransferRequestDTO;
 import com.sopt.solsol.dto.transfer.TransferResponseDTO;
 import com.sopt.solsol.service.TransferService;
 import lombok.Builder;
@@ -20,6 +21,15 @@ import static com.sopt.solsol.exception.SuccessStatus.*;
 public class TransferController {
 
     private final TransferService transferService;
+
+    @PostMapping()
+    public ResponseEntity<ApiResponseDto> createTransfer(
+            @RequestParam("memberId") Long memberId,
+            @RequestBody TransferRequestDTO transferRequestDTO
+    ) {
+        transferService.create(transferRequestDTO, memberId);
+        return ResponseEntity.ok(success(TRANSFER_SUCCESS));
+    }
 
     @DeleteMapping("/{transferId}")
     public ResponseEntity<ApiResponseDto> deleteTransfer(
@@ -42,6 +52,6 @@ public class TransferController {
     @Data
     @Builder
     public static class TransferResponseDto {
-        private List<TransferResponseDTO> feedback;
+        private List<TransferResponseDTO> transfers;
     }
 }

@@ -51,4 +51,11 @@ public class Accounts {
         this.name = name;
         this.kind = kind;
     }
+    public void depositAccounts(Long price) {
+        this.balance += price;
+    }
+
+    public void withdrawAccounts(Long price, Long charge) {
+        this.balance -= (price + charge);
+    }
 }

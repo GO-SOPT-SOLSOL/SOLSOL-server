@@ -40,17 +40,18 @@ public class Transfer {
     @Column(nullable = false)
     private String receiverMemo;
 
-    @Size(max = 20)
-    @Column(nullable = false)
-    private String charge;
+    private Long price;
+
+    private Long charge;
 
     @Builder
-    public Transfer(Member member, Accounts accounts, LocalDateTime createdAt, String transferMemo, String receiverMemo, String charge) {
+    public Transfer(Member member, Accounts accounts, LocalDateTime createdAt, String transferMemo, String receiverMemo, Long price, Long charge) {
         this.member = member;
         this.accounts = accounts;
         this.createdAt = createdAt;
         this.transferMemo = transferMemo;
         this.receiverMemo = receiverMemo;
+        this.price = price;
         this.charge = charge;
     }
 }
