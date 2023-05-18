@@ -72,7 +72,7 @@ public class TransferService {
                         .id(transfer.getId())
                         .accountNumber(transfer.getAccounts().getNumber())
                         .bank(transfer.getAccounts().getBank().toString())
-                        .name(transfer.getAccounts().getName())
+                        .name(transfer.getAccounts().getMember().getName())
                         .createdAt(changeFormat(transfer.getCreatedAt()))
                         .build())
                 .collect(Collectors.toList());
