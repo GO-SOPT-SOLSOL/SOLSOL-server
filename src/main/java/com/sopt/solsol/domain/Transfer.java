@@ -30,27 +30,27 @@ public class Transfer {
 
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy.MM.dd")
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Size(max = 20)
     @Column(nullable = false)
-    private String transfer_memo;
+    private String transferMemo;
 
     @Size(max = 20)
     @Column(nullable = false)
-    private String receiver_memo;
+    private String receiverMemo;
 
     @Size(max = 20)
     @Column(nullable = false)
     private String charge;
 
     @Builder
-    public Transfer(Member member, Accounts accounts, LocalDateTime created_at,String transfer_memo, String receiver_memo, String charge) {
+    public Transfer(Member member, Accounts accounts, LocalDateTime createdAt, String transferMemo, String receiverMemo, String charge) {
         this.member = member;
         this.accounts = accounts;
-        this.created_at = created_at;
-        this.transfer_memo = transfer_memo;
-        this.receiver_memo = receiver_memo;
+        this.createdAt = createdAt;
+        this.transferMemo = transferMemo;
+        this.receiverMemo = receiverMemo;
         this.charge = charge;
     }
 }

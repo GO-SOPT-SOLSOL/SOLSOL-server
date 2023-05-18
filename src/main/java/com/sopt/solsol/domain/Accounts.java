@@ -51,6 +51,4 @@ public class Accounts {
         this.name = name;
         this.kind = kind;
     }
-
-
 }
