@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SolsolApplication {
+public class SolsolApplicationTest {
+	public static void main(String[] args) {
+
+	}
 
 	@Test
 	void contextLoads() {
