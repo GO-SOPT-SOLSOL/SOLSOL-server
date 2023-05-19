@@ -1,10 +1,12 @@
 package com.sopt.solsol.dto.transfer;
 
+
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 public class TransferResponseDTO {
+
     private Long id;
     private String name;
     private String bank;
