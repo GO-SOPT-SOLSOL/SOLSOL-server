@@ -79,6 +79,7 @@ public class TransferService {
     }
 
     private String changeFormat(LocalDateTime localDateTime) {
+
          DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy.MM.dd");
             return localDateTime.format(formatter).toString();
     }
