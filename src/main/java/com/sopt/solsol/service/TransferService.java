@@ -35,13 +35,13 @@ public class TransferService {
     public void create(TransferRequestDTO transferRequestDTO, Long memberId) {
 
         Member member = memberRepository.findById(memberId).orElseThrow(
-                () -> new EntityNotFoundException()
+                () -> new EntityNotFoundException("Member not found with id : " + memberId)
         );
         Accounts senderAccounts = accountsRepository.findById(transferRequestDTO.getSenderAccountsId())
-                .orElseThrow(() -> new EntityNotFoundException());
+                        .orElseThrow(() -> new EntityNotFoundException());
         Bank bank = Util.getBankEnum(transferRequestDTO.getBank());
         Accounts receiverAccounts = accountsRepository.findByBankAndNumber(bank, transferRequestDTO.getNumber())
-                .orElseThrow(() -> new EntityNotFoundException());
+                        .orElseThrow(() -> new EntityNotFoundException());
 
         transferRepository.save(Transfer.builder()
                 .member(member)
@@ -79,7 +79,8 @@ public class TransferService {
     }
 
     private String changeFormat(LocalDateTime localDateTime) {
-        DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy.MM.dd");
-        return localDateTime.format(formatter).toString();
+
+         DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy.MM.dd");
+            return localDateTime.format(formatter).toString();
     }
 }

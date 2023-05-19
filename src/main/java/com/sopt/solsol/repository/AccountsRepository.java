@@ -1,6 +1,5 @@
 package com.sopt.solsol.repository;
 
-
 import com.sopt.solsol.domain.Accounts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.sopt.solsol.domain.Bank;
