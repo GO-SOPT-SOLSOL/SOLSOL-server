@@ -21,7 +21,7 @@ public class AccountsController {
     private final AccountSerivce accountSerivce;
 
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<ApiResponseDto> getAccountsList(
             @RequestParam("memberId") Long memberId
     ){
