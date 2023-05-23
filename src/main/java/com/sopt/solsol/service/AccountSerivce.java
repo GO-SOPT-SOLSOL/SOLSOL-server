@@ -1,19 +1,15 @@
 package com.sopt.solsol.service;
 
 import com.sopt.solsol.domain.Accounts;
-import com.sopt.solsol.domain.Member;
 import com.sopt.solsol.dto.accounts.AccountsResponseDTO;
-import com.sopt.solsol.dto.transfer.TransferResponseDTO;
-import com.sopt.solsol.exception.ErrorStatus;
-import com.sopt.solsol.exception.model.IternalServerException;
 import com.sopt.solsol.repository.AccountsRepository;
 import com.sopt.solsol.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +23,7 @@ public class AccountSerivce {
     public List<AccountsResponseDTO> getAccountList(Long memberId){
 
         memberRepository.findById(memberId)
-                .orElseThrow(() -> new IternalServerException(ErrorStatus.UNAUTHORIZED_MEMBER_EXCEPTION, ErrorStatus.UNAUTHORIZED_MEMBER_EXCEPTION.getMessage()));
+                .orElseThrow(() -> new EntityNotFoundException());
 
 
         return   accountsRepository.findAllByMemberIdOrderByIdDesc(memberId)
