@@ -1,5 +1,6 @@
 package com.sopt.solsol.dto.transfer;
 
+import com.sopt.solsol.domain.Bank;
 import lombok.Data;
 
 import javax.validation.constraints.Positive;
@@ -10,7 +11,7 @@ public class TransferRequestDTO {
     private Long senderAccountsId;
     private String transferMemo;
     private String receiverMemo;
-    private String bank;
+    private Bank bank;
     private String number;
     @PositiveOrZero
     private Long charge;

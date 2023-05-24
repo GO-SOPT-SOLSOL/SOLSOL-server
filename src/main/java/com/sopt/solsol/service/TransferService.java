@@ -44,12 +44,10 @@ public class TransferService {
                         .orElseThrow(() -> new EntityNotFoundException());
 
         if (senderAccounts.getMember().getId() != memberId) {
-            throw new IllegalArgumentException("해당 계좌의 소유자가 아닙니다. : " + memberId);
+            throw new IllegalArgumentException(memberId + "번 member는 " + transferRequestDTO.getSenderAccountsId() + "번 계좌의 소유자가 아닙니다.");
         }
-        Bank bank = Util.getBankEnum(transferRequestDTO.getBank());
-
         // 받는 사람의 계좌
-        Accounts receiverAccounts = accountsRepository.findByBankAndNumber(bank, transferRequestDTO.getNumber())
+        Accounts receiverAccounts = accountsRepository.findByBankAndNumber(transferRequestDTO.getBank(), transferRequestDTO.getNumber())
                         .orElseThrow(() -> new EntityNotFoundException());
 
         transferRepository.save(Transfer.builder()
@@ -79,9 +77,11 @@ public class TransferService {
                 .stream()
                 .map(transfer -> TransferResponseDTO.builder()
                         .id(transfer.getId())
+                        .memberId(transfer.getAccounts().getMember().getId())
                         .accountNumber(transfer.getAccounts().getNumber())
                         .bank(transfer.getAccounts().getBank().toString())
                         .name(transfer.getAccounts().getMember().getName())
+                        .price(transfer.getPrice())
                         .createdAt(changeFormat(transfer.getCreatedAt()))
                         .build())
                 .collect(Collectors.toList());
