@@ -13,8 +13,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.*;
 import static lombok.AccessLevel.*;
 
 @Getter
-@RequiredArgsConstructor(access = PRIVATE)
-@AllArgsConstructor(access = PRIVATE)
+@RequiredArgsConstructor()
+@AllArgsConstructor()
 @JsonInclude(Include.NON_NULL)
 public class ApiResponseDto<T> {
 

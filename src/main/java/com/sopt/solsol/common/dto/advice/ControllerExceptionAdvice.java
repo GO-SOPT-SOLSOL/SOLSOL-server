@@ -6,9 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController
+@RestControllerAdvice
 public class ControllerExceptionAdvice {
     /*
     ITERNAL SERVER ERROR
@@ -18,4 +19,11 @@ public class ControllerExceptionAdvice {
     protected ApiResponseDto handleResponseStatusException (final ResponseStatusException e){
         return ApiResponseDto.error(ErrorStatus.RESPONSE_STATUS_EXCEPTION);
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ApiResponseDto handleIllegalArgumentException (IllegalArgumentException e) {
+        return new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), false, e.getMessage());
+    }
+
 }

@@ -39,6 +39,10 @@ public class TransferService {
         );
         Accounts senderAccounts = accountsRepository.findById(transferRequestDTO.getSenderAccountsId())
                         .orElseThrow(() -> new EntityNotFoundException());
+
+        if (senderAccounts.getMember().getId() == memberId) {
+            throw new IllegalArgumentException("해당 계좌의 소유자가 아닙니다. : " + memberId);
+        }
         Bank bank = Util.getBankEnum(transferRequestDTO.getBank());
         Accounts receiverAccounts = accountsRepository.findByBankAndNumber(bank, transferRequestDTO.getNumber())
                         .orElseThrow(() -> new EntityNotFoundException());
