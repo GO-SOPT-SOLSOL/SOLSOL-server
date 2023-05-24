@@ -1,7 +1,6 @@
 package com.sopt.solsol.service;
 
 import com.sopt.solsol.domain.Accounts;
-import com.sopt.solsol.domain.Bank;
 import com.sopt.solsol.domain.Member;
 import com.sopt.solsol.domain.Transfer;
 import com.sopt.solsol.dto.transfer.TransferRequestDTO;
@@ -9,7 +8,6 @@ import com.sopt.solsol.dto.transfer.TransferResponseDTO;
 import com.sopt.solsol.repository.AccountsRepository;
 import com.sopt.solsol.repository.MemberRepository;
 import com.sopt.solsol.repository.TransferRepository;
-import com.sopt.solsol.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +75,7 @@ public class TransferService {
                 .stream()
                 .map(transfer -> TransferResponseDTO.builder()
                         .id(transfer.getId())
-                        .memberId(transfer.getAccounts().getMember().getId())
+                        .accountsId(transfer.getAccounts().getId())
                         .accountNumber(transfer.getAccounts().getNumber())
                         .bank(transfer.getAccounts().getBank().toString())
                         .name(transfer.getAccounts().getMember().getName())
@@ -88,7 +86,6 @@ public class TransferService {
     }
 
     private String changeFormat(LocalDateTime localDateTime) {
-
          DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy.MM.dd");
             return localDateTime.format(formatter).toString();
     }

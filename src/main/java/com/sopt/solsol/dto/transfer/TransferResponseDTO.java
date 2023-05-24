@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class TransferResponseDTO {
     private Long id;
-    private Long memberId;
+    private Long accountsId;
     private String name;
     private String bank;
     private String accountNumber;
@@ -15,9 +15,9 @@ public class TransferResponseDTO {
 
     @Builder
 
-    public TransferResponseDTO(Long id, Long memberId, String name, String bank, String accountNumber, Long price, String createdAt) {
+    public TransferResponseDTO(Long id, Long accountsId, String name, String bank, String accountNumber, Long price, String createdAt) {
         this.id = id;
-        this.memberId = memberId;
+        this.accountsId = accountsId;
         this.name = name;
         this.bank = bank;
         this.accountNumber = accountNumber;
