@@ -34,16 +34,21 @@ public class TransferService {
     @Transactional
     public void create(TransferRequestDTO transferRequestDTO, Long memberId) {
 
+        // 보내는 사람의 id
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new EntityNotFoundException("Member not found with id : " + memberId)
         );
+
+        // 보내는 사람의 계좌
         Accounts senderAccounts = accountsRepository.findById(transferRequestDTO.getSenderAccountsId())
                         .orElseThrow(() -> new EntityNotFoundException());
 
-        if (senderAccounts.getMember().getId() == memberId) {
+        if (senderAccounts.getMember().getId() != memberId) {
             throw new IllegalArgumentException("해당 계좌의 소유자가 아닙니다. : " + memberId);
         }
         Bank bank = Util.getBankEnum(transferRequestDTO.getBank());
+
+        // 받는 사람의 계좌
         Accounts receiverAccounts = accountsRepository.findByBankAndNumber(bank, transferRequestDTO.getNumber())
                         .orElseThrow(() -> new EntityNotFoundException());
 
