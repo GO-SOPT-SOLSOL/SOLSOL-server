@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,20 +72,30 @@ public class TransferService {
 
     @Transactional(readOnly = true)
     public List<TransferResponseDTO> getTransferList(Long memberId) {
-        return transferRepository.findAllByMemberIdOrderByCreatedAtDesc(memberId)
-                .stream()
-                .map(transfer -> TransferResponseDTO.builder()
-                        .id(transfer.getId())
-                        .accountsId(transfer.getAccounts().getId())
-                        .accountNumber(transfer.getAccounts().getNumber())
-                        .bank(transfer.getAccounts().getBank().toString())
-                        .name(transfer.getAccounts().getMember().getName())
-                        .price(transfer.getPrice())
-                        .createdAt(changeFormat(transfer.getCreatedAt()))
-                        .build())
-                .collect(Collectors.toList());
-    }
+        List<Long> accountNumberList = new ArrayList<>();
+        List<Transfer> transferList = transferRepository.findAllByMemberIdOrderByCreatedAtDesc(memberId);
 
+        List<TransferResponseDTO> transferResponseDTOList = new ArrayList<>();
+        for (Transfer transfer: transferList) {
+            if( accountNumberList.contains(transfer.getAccounts().getId())) {
+                continue;
+            } else {
+                transferResponseDTOList.add(
+                        TransferResponseDTO.builder()
+                                .id(transfer.getId())
+                                .accountsId(transfer.getAccounts().getId())
+                                .accountNumber(transfer.getAccounts().getNumber())
+                                .bank(transfer.getAccounts().getBank().toString())
+                                .name(transfer.getAccounts().getMember().getName())
+                                .price(transfer.getPrice())
+                                .createdAt(changeFormat(transfer.getCreatedAt()))
+                                .build()
+                );
+                accountNumberList.add(transfer.getAccounts().getId());
+            }
+        }
+        return transferResponseDTOList;
+    }
     private String changeFormat(LocalDateTime localDateTime) {
          DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy.MM.dd");
             return localDateTime.format(formatter).toString();
